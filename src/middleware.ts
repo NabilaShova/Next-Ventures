@@ -1,21 +1,29 @@
 import createMiddleware from "next-intl/middleware";
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 import { routing } from "@/i18n/routing";
+import { isClerkConfigured } from "@/lib/clerk-config";
 
 const intlMiddleware = createMiddleware(routing);
-const isProtectedRoute = createRouteMatcher([
-  "/:locale/admin(.*)",
-  "/admin(.*)",
-  "/api/admin(.*)",
-]);
 
-export default clerkMiddleware(async (auth, request) => {
-  if (isProtectedRoute(request)) {
-    await auth.protect();
-  }
-  return intlMiddleware(request);
-});
+let middleware: typeof intlMiddleware = intlMiddleware;
+
+if (isClerkConfigured()) {
+  const { clerkMiddleware, createRouteMatcher } = require("@clerk/nextjs/server");
+  const isProtectedRoute = createRouteMatcher([
+    "/:locale/admin(.*)",
+    "/admin(.*)",
+    "/api/admin(.*)",
+  ]);
+
+  middleware = clerkMiddleware(async (auth: { protect: () => Promise<void> }, request: Request) => {
+    if (isProtectedRoute(request)) {
+      await auth.protect();
+    }
+    return intlMiddleware(request);
+  });
+}
+
+export default middleware;
 
 export const config = {
   matcher: [

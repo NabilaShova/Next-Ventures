@@ -1,11 +1,14 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
-import { Bell, Menu, Search } from "lucide-react";
+import { Bell, Menu, Search, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+
+const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const clerkEnabled =
+  clerkKey && clerkKey.startsWith("pk_") && !clerkKey.includes("xxx");
 
 interface AdminHeaderProps {
   title: string;
@@ -63,14 +66,25 @@ export function AdminHeader({
             <Bell className="h-4 w-4" />
             <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" />
           </Button>
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: "h-9 w-9 ring-2 ring-primary/20",
-              },
-            }}
-          />
+          {clerkEnabled ? (
+            (() => {
+              const { UserButton } = require("@clerk/nextjs") as typeof import("@clerk/nextjs");
+              return (
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-9 w-9 ring-2 ring-primary/20",
+                    },
+                  }}
+                />
+              );
+            })()
+          ) : (
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted ring-2 ring-primary/20">
+              <User className="h-4 w-4 text-muted-foreground" />
+            </div>
+          )}
         </div>
       </div>
     </header>

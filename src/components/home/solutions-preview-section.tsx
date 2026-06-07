@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 import { getFeaturedProducts } from "@/services/product.service";
 
 export async function SolutionsPreviewSection() {
-  const t = useTranslations("common");
+  const t = await getTranslations("common");
   const { products } = await getFeaturedProducts();
 
   return (
