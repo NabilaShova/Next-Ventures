@@ -1,0 +1,28 @@
+{
+  "common": {
+    "bookDemo": "Book Demo",
+    "viewSolutions": "View Solutions",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "contactUs": "Contact Us",
+    "startTrial": "Start Free Trial",
+    "scheduleDemo": "Schedule Demo",
+    "requestCustomization": "Request Customization"
+  },
+  "hero": {
+    "title": "Enterprise AI Solutions That Work While You Sleep",
+    "subtitle": "We build AI Agents, Business Automations, SaaS Platforms, and Custom Software that increase revenue, reduce costs, and automate operations."
+  },
+  "stats": {
+    "enterpriseClients": "Enterprise Clients",
+    "projectsDelivered": "Projects Delivered",
+    "automationsBuilt": "Automations Built",
+    "hoursSaved": "Hours Saved"
+  },
+  "footer": {
+    "newsletter": "Stay ahead with AI insights",
+    "newsletterDesc": "Get weekly updates on AI automation, enterprise strategies, and product launches.",
+    "subscribe": "Subscribe",
+    "rights": "All rights reserved."
+  }
+}
